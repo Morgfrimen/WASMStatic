@@ -1,54 +1,29 @@
-# This is a basic workflow to help you get started with Actions
+name: Deploy to GitHub Pages
 
-name: CI
-
-# Controls when the workflow will run
+# Запускаем магию только на пуши в main
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    branches: master
+    
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  deploy-to-github-pages:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-       # ставим нужный SDK (можно использовать и более старые)
-      - name: Setup .NET 6
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
-          
-       # меняем '/' на '/WASMStatic/'
-      - name: Change base-tag in index.html from / to WASMStatic
-        run: sed -i 's/<base href="\/" \/>/<base href="\/WASMStatic\/" \/>/g' release/wwwroot/index.html
-      # отключаем jekyll
-      - name: Add .nojekyll file
-        run: touch release/wwwroot/.nojekyll    
+      # клонируем репозиторий на виртуальную машину
+    - uses: actions/checkout@v2
+    
+      # ставим нужный SDK (можно использовать и более старые)
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+        include-prerelease: true
+        
       # генерируем статические файлы
-      - name: Publish .NET Core Project
-        run: dotnet publish WASMStatic.csproj -c Release --output release
-      - name: Uploading files to gh-pages branch
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-           branch: gh-pages
-           folder: release/wwwroot
-           
-     
-
-        
-        
-        
+    - name: Publish .NET Core Project
+      run: dotnet publish WASMStatic.csproj -c Release --output release --nologo
+    - name: Uploading files to gh-pages branch
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        branch: gh-pages
+        folder: release/wwwroot
