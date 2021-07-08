@@ -39,12 +39,7 @@ jobs:
         with:
            branch: gh-pages
            folder: release/wwwroot
-        # меняем '/' на '/WASMStatic/'
-      - name: Change base-tag in index.html from / to WASMStatic
-        run: sed -i 's/<base href="\/" \/>/<base href="\/WASMStatic\/" \/>/g' release/wwwroot/index.html
-           # отключаем jekyll
-      - name: Add .nojekyll file
-        run: touch release/wwwroot/.nojekyll
+
         
         
         
