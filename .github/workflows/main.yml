@@ -21,7 +21,7 @@ jobs:
       run: dotnet publish WASMStatic.csproj -c Release --output release --nologo
       
     - name: Change base-tag in index.html from / to the necessary
-      run: sed -i 's/<base href="\/" \/>/<base href="\/WASMStatic\/" \/>/g' ./bin/release/net6.0/publish/wwwroot/index.html
+      run: sed -i 's/<base href="\/" \/>/<base href="\/WASMStatic\/" \/>/g' release/wwwroot/index.html
       
     - name: Add .nojekyll file
       run: touch ./WASMStatic/bin/release/net6.0/publish/wwwroot/.nojekyll
