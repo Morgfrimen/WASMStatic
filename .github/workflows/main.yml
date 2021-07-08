@@ -1,35 +1,35 @@
-name: Deploy to GitHub Pages
+name: Deploy
 
-# Запускаем магию только на пуши в main
 on:
   push:
-    branches: master
-    
+    branches:
+      - main
+
 jobs:
-  deploy-to-github-pages:
+  deployment:
     runs-on: ubuntu-latest
     steps:
-      # клонируем репозиторий на виртуальную машину
     - uses: actions/checkout@v2
     
-      # ставим нужный SDK (можно использовать и более старые)
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '6.0.x'
         include-prerelease: true
         
-      # генерируем статические файлы
-    - name: Publish .NET Core Project
-      run: dotnet publish WASMStatic.csproj -c Release --output release --nologo
-    - name: Uploading files to gh-pages branch
-      uses: JamesIves/github-pages-deploy-action@4.1.4
+    - name: publish
+      run: |
+        cd TypeInfoApp
+        dotnet publish -c release
+      
+    - name: Change base-tag in index.html from / to the necessary
+      run: sed -i 's/<base href="\/" \/>/<base href="\/WASMStatic\/" \/>/g' ./WASMStatic/bin/release/net6.0/publish/wwwroot/index.html
+      
+    - name: Add .nojekyll file
+      run: touch ./WASMStatic/bin/release/net6.0/publish/wwwroot/.nojekyll
+      
+    - uses: JamesIves/github-pages-deploy-action@4.1.4
+      name: gh-pages publish
       with:
         branch: gh-pages
-        folder: release/wwwroot        
-    # меняем '/' на '/BlazorGitHubPagesDemo/'
-    - name: Change base-tag in index.html from / to BlazorGitHubPagesDemo
-      run: sed -i 's/<base href="\/" \/>/<base href="\/WASMStatic\/" \/>/g' release/wwwroot/index.html
-    # отключаем jekyll
-    - name: Add .nojekyll file
-      run: touch release/wwwroot/.nojekyll
+        folder: ./WASMStatic/bin/release/net6.0/publish/wwwroot
