@@ -14,4 +14,22 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0-preview.4.21253.5" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\WebGL_Unity\Build\WEBGL.data" />
+    <None Include="wwwroot\WebGL_Unity\Build\WEBGL.framework.js" />
+    <None Include="wwwroot\WebGL_Unity\Build\WEBGL.loader.js" />
+    <None Include="wwwroot\WebGL_Unity\Build\WEBGL.wasm" />
+    <None Include="wwwroot\WebGL_Unity\Game.html" />
+    <None Include="wwwroot\WebGL_Unity\TemplateData\favicon.ico" />
+    <None Include="wwwroot\WebGL_Unity\TemplateData\fullscreen-button.png" />
+    <None Include="wwwroot\WebGL_Unity\TemplateData\progress-bar-empty-dark.png" />
+    <None Include="wwwroot\WebGL_Unity\TemplateData\progress-bar-empty-light.png" />
+    <None Include="wwwroot\WebGL_Unity\TemplateData\progress-bar-full-dark.png" />
+    <None Include="wwwroot\WebGL_Unity\TemplateData\progress-bar-full-light.png" />
+    <None Include="wwwroot\WebGL_Unity\TemplateData\style.css" />
+    <None Include="wwwroot\WebGL_Unity\TemplateData\unity-logo-dark.png" />
+    <None Include="wwwroot\WebGL_Unity\TemplateData\unity-logo-light.png" />
+    <None Include="wwwroot\WebGL_Unity\TemplateData\webgl-logo.png" />
+  </ItemGroup>
+
 </Project>
