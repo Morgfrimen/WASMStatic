@@ -19,9 +19,9 @@
 
 @code {
 
-    private async void RunButton()
+    private void RunButton()
     {
-        await jsRuntime.InvokeVoidAsync("loadScene",new object[]{IdCanvas});
+        jsRuntime.InvokeVoidAsync("loadScene",new object[]{IdCanvas});
         StateHasChanged();
     }
 
