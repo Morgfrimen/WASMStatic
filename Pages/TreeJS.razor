@@ -1,0 +1,45 @@
+﻿@page "/treejs"
+@inject IJSRuntime jsRuntime;
+
+<div class="container-fluid">
+    <div class="row">
+        <h3>TreeJS, но пока не работает</h3>
+    </div>
+   @* <div class="row">
+        <button @onclick="RunButton"> Начать построение</button>
+    </div>*@
+    <div class="row col container-fluid">
+        <canvas id="@IdCanvas"></canvas>
+    </div>
+</div>
+
+
+
+
+
+@code {
+
+    private async void RunButton()
+    {
+        await jsRuntime.InvokeVoidAsync("loadScene",new object[]{IdCanvas});
+        StateHasChanged();
+    }
+
+    private string IdCanvas { get; } = "treeJSScene";
+
+    #region Overrides of ComponentBase
+
+    /// <inheritdoc />
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            RunButton();
+        }
+
+        return Task.CompletedTask;
+    }
+
+    #endregion
+
+}
