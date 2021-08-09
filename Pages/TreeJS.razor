@@ -5,9 +5,9 @@
     <div class="row">
         <h3>TreeJS, но пока не работает</h3>
     </div>
-   @* <div class="row">
-        <button @onclick="RunButton"> Начать построение</button>
-    </div>*@
+    <div class="row">
+        <button @onclick="CreateFooter"> Начать построение подвала</button>
+    </div>
     <div class="row col container-fluid">
         <canvas id="@IdCanvas"></canvas>
     </div>
@@ -41,5 +41,15 @@
     }
 
     #endregion
+
+    private void CreateFooter()
+    {
+        ValueTask task = jsRuntime.InvokeVoidAsync("footerCreate", new object[]
+        {
+            100, 10, 80, 6, 12
+        });
+        Task.WaitAll(task.AsTask());
+        StateHasChanged();
+    }
 
 }
